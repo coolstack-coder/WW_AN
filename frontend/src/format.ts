@@ -26,7 +26,15 @@ export const pct = (v: number | null | undefined, digits = 0) =>
   v == null ? "–" : `${(v * 100).toFixed(digits)}%`;
 
 export const signed = (v: number | null | undefined, unit = "MW") =>
-  v == null ? "–" : `${v > 0 ? "+" : ""}${Math.round(v).toLocaleString("en-GB")} ${unit}`;
+  v == null ? "–" : `${v > 0 ? "+" : ""}${Math.round(v).toLocaleString("en-GB")}${unit === "%" ? "" : " "}${unit}`;
+
+/** Evenly spaced tick positions (ms) aligned to whole hours of UTC, every `stepH` hours. */
+export const hourTicks = (fromMs: number, toMs: number, stepH: number) => {
+  const step = stepH * 3600_000;
+  const out: number[] = [];
+  for (let t = Math.ceil(fromMs / step) * step; t <= toMs; t += step) out.push(t);
+  return out;
+};
 
 export const addDays = (isoDate: string, n: number) => {
   const d = new Date(`${isoDate}T12:00:00Z`);

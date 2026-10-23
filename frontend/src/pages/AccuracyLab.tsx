@@ -94,7 +94,7 @@ export default function AccuracyLab() {
                   <XAxis dataKey="from" stroke="#1f2f4d" tickFormatter={kTick} interval={1} />
                   <YAxis stroke="#1f2f4d" width={40} />
                   <ReferenceLine x={0} stroke="#8a9bb8" />
-                  <Tooltip content={({ active, payload }) => active && payload?.length ? (
+                  <Tooltip cursor={{ fill: "rgba(255,255,255,.03)" }} content={({ active, payload }) => active && payload?.length ? (
                     <TooltipBox title={`${kTick(payload[0].payload.from)} to ${kTick(payload[0].payload.to)} GW`} rows={[{ name: "hours", value: String(payload[0].value) }]} />
                   ) : null} />
                   <Bar dataKey="count" isAnimationActive={false}>

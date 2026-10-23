@@ -4,9 +4,12 @@ import {
 } from "recharts";
 import { api, DailyDecision, Decision, Meta } from "../api";
 import { Card, Kpi, Legend, Status, TooltipBox, useAsync } from "../components/ui";
-import { addDays, fmtDay, fmtDayTime, fmtTime, gw, gwh, mw, pct, signed, toMs } from "../format";
+import { addDays, fmtDay, fmtDayTime, fmtTime, gw, gwh, hourTicks, mw, pct, signed, toMs } from "../format";
 
 const tickH = (ms: number) => fmtTime(ms);
+const tickGW = (v: number) => `${(v / 1000).toFixed(0)} GW`;
+const dayTicks = (rows: { t?: unknown }[]) =>
+  rows.length ? hourTicks(rows[0].t as number, rows[rows.length - 1].t as number, 3) : [];
 
 function DayStrip({ meta, daily, value, onChange }: {
   meta: Meta; daily?: DailyDecision[]; value: string; onChange: (d: string) => void;
@@ -55,9 +58,8 @@ function DeliveryChart({ data, reveal }: { data: Decision; reveal: boolean }) {
         <ComposedChart data={rows} margin={{ top: 10, right: 12, left: 0, bottom: 0 }}>
           <CartesianGrid stroke="#1f2f4d" strokeDasharray="3 6" vertical={false} />
           <XAxis dataKey="t" type="number" scale="time" domain={["dataMin", "dataMax"]} tickFormatter={tickH}
-            tickCount={9} stroke="#1f2f4d" />
-          <YAxis tickFormatter={(v) => `${(v / 1000).toFixed(0)}`} stroke="#1f2f4d" width={44}
-            label={{ value: "GW", angle: 0, position: "insideTopLeft", fill: "#5b6b88", fontSize: 11, dy: -8 }} />
+            ticks={dayTicks(rows)} stroke="#1f2f4d" />
+          <YAxis tickFormatter={tickGW} stroke="#1f2f4d" width={52} />
           <Tooltip
             content={({ active, payload, label }) => {
               if (!active || !payload?.length) return null;
@@ -104,8 +106,8 @@ function VintageChart({ data }: { data: Decision }) {
     <ResponsiveContainer width="100%" height={220}>
       <LineChart data={rows} margin={{ top: 6, right: 12, left: 0, bottom: 0 }}>
         <CartesianGrid stroke="#1f2f4d" strokeDasharray="3 6" vertical={false} />
-        <XAxis dataKey="t" type="number" scale="time" domain={["dataMin", "dataMax"]} tickFormatter={tickH} stroke="#1f2f4d" tickCount={7} />
-        <YAxis tickFormatter={(v) => `${(v / 1000).toFixed(0)}`} stroke="#1f2f4d" width={44} />
+        <XAxis dataKey="t" type="number" scale="time" domain={["dataMin", "dataMax"]} tickFormatter={tickH} stroke="#1f2f4d" ticks={dayTicks(rows)} />
+        <YAxis tickFormatter={tickGW} stroke="#1f2f4d" width={52} />
         <Tooltip
           content={({ active, payload, label }) =>
             active && payload?.length ? (
@@ -170,7 +172,7 @@ export default function DecisionDesk({ meta }: { meta: Meta }) {
               hint={<>Range {gw(s.min_forecast_mw)} – {gw(s.peak_forecast_mw)} through the day</>} />
             <Kpi label="Wind you can count on (P10)" color="var(--band)"
               value={gwh(s.conservative_mwh)}
-              hint="Each hour, 9 in 10 past decisions saw at least this much wind" />
+              hint="Forecast plus the P10 of recent errors – outturn beat this level in ~9 of 10 past hours" />
             <Kpi label="Bias-adjusted expectation" color="var(--corrected)"
               value={gwh(s.corrected_mwh)}
               hint={data.band ? <>Forecast shifted by recent median error ({signed(data.band.p50)})</> : "Not enough history"} />

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CartesianGrid, ComposedChart, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { api, Meta } from "../api";
 import { Card, Kpi, Legend, Status, TooltipBox, useAsync } from "../components/ui";
-import { fmtDayTime, gw, mw, pct, signed, toMs } from "../format";
+import { fmtDayTime, gw, hourTicks, mw, pct, signed, toMs } from "../format";
 
 const dayTick = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/London", day: "numeric", month: "short" });
 
@@ -83,9 +83,9 @@ export default function Explorer({ meta }: { meta: Meta }) {
                 <ComposedChart data={rows} margin={{ top: 10, right: 12, left: 0, bottom: 0 }}>
                   <CartesianGrid stroke="#1f2f4d" strokeDasharray="3 6" vertical={false} />
                   <XAxis dataKey="t" type="number" scale="time" domain={["dataMin", "dataMax"]}
-                    tickFormatter={(v) => dayTick.format(v)} stroke="#1f2f4d" tickCount={10} />
-                  <YAxis tickFormatter={(v) => `${(v / 1000).toFixed(0)}`} stroke="#1f2f4d" width={44}
-                    label={{ value: "GW", position: "insideTopLeft", fill: "#5b6b88", fontSize: 11, dy: -8 }} />
+                    tickFormatter={(v) => dayTick.format(v)} stroke="#1f2f4d"
+                    ticks={rows.length ? hourTicks(rows[0].t, rows[rows.length - 1].t, 24 * Math.max(1, Math.ceil(rows.length / 48 / 12))) : []} />
+                  <YAxis tickFormatter={(v) => `${(v / 1000).toFixed(0)} GW`} stroke="#1f2f4d" width={52} />
                   <Tooltip
                     content={({ active, payload, label }) => {
                       if (!active || !payload?.length) return null;

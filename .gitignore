@@ -18,3 +18,4 @@ frontend/dist/
 .vercel
 video/build/
 .claude/
+*.tsbuildinfo
