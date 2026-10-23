@@ -1,0 +1,5 @@
+# Used by Vercel's Python runtime for api/index.py (mirrors backend/requirements.txt minus the server)
+fastapi==0.115.6
+httpx==0.28.1
+pandas>=2.2,<4
+numpy>=2.0,<3
