@@ -170,7 +170,7 @@ export default function DecisionDesk({ meta }: { meta: Meta }) {
             <Kpi label={`Wind forecast · ${fmtDay(data.delivery_day)}`} color="var(--forecast)"
               value={gwh(s.forecast_mwh)}
               hint={<>Range {gw(s.min_forecast_mw)} – {gw(s.peak_forecast_mw)} through the day</>} />
-            <Kpi label="Wind you can count on (P10)" color="var(--band)"
+            <Kpi label="Wind you can count on (P10)" color="rgba(45, 212, 191, .45)"
               value={gwh(s.conservative_mwh)}
               hint="Forecast plus the P10 of recent errors – outturn beat this level in ~9 of 10 past hours" />
             <Kpi label="Bias-adjusted expectation" color="var(--corrected)"
