@@ -235,4 +235,4 @@ heroku stack:set container && git push heroku main
 
 ---
 
-<sub>Built by Amar Anmol Advani · Data source: Elexon Insights (BMRS) FUELHH and WINDFOR datasets.</sub>
+<sub>Built by Anmol Adwani · Data source: Elexon Insights (BMRS) FUELHH and WINDFOR datasets.</sub>
