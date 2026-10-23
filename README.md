@@ -8,7 +8,7 @@
 
 React · TypeScript · FastAPI · pandas · Docker · Vercel
 
-[▶ Watch the demo](#-video-walkthrough) · [🌐 Live app](#-live-app) · [📊 Analysis](docs/ANALYSIS.md) · [⚙ Run it](#-running-it)
+[▶ Watch the demo](#-video-walkthrough) · [🌐 Live app](https://ww-an.vercel.app) · [📊 Analysis](docs/ANALYSIS.md) · [⚙ Run it](#-running-it)
 
 </div>
 
@@ -18,7 +18,7 @@ React · TypeScript · FastAPI · pandas · Docker · Vercel
 
 [![Wind Watch – video walkthrough](docs/media/poster.jpg)](docs/media/wind_watch_demo.mp4)
 
-> **[▶ Play the walkthrough (7 min 49 s, MP4)](docs/media/wind_watch_demo.mp4)** · YouTube (unlisted): __YOUTUBE_URL__
+> **[▶ Play the walkthrough (7 min 49 s, MP4)](docs/media/wind_watch_demo.mp4)**
 >
 > | | Part | Audience | Starts at |
 > |---|---|---|---|
@@ -27,7 +27,9 @@ React · TypeScript · FastAPI · pandas · Docker · Vercel
 
 ## 🌐 Live app
 
-**__LIVE_URL__**
+### **[ww-an.vercel.app](https://ww-an.vercel.app)**
+
+Frontend and API are served from the same Vercel deployment (API: [`/api/meta`](https://ww-an.vercel.app/api/meta)).
 
 The app opens on the Decision Desk. Pick any January decision day, then click **Reveal actuals**.
 
