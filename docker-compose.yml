@@ -1,0 +1,7 @@
+services:
+  app:
+    build: .
+    image: wind-watch:latest
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
